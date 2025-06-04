@@ -1,27 +1,31 @@
+'use client'
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const products = [
-  {
-    id: 1,
-    name: 'Basic T-shirt',
-    price: '$19.99',
-    image: 'https://placehold.co/300x300',
-  },
-  {
-    id: 2,
-    name: 'Cool Sneakers',
-    price: '$49.99',
-    image: 'https://placehold.co/300x300',
-  },
-  {
-    id: 3,
-    name: 'Stylish Backpack',
-    price: '$39.99',
-    image: 'https://placehold.co/300x300',
-  },
-]
+interface DataType {
+ id : number ;
+ name : string ;
+ price : number ;
+ image : string ;
 
-export default function Home() {
+}
+export default function Home(){
+const [products, setProduct] = useState<DataType[]>([])
+
+ useEffect(() => {
+(async() => {
+    const products = await axios.get('/api/products')
+    if(products.data.data){
+
+      setProduct(products.data.data)
+    }
+
+})()
+
+ }, [])
+
+
   return (
     <>
       <Head>
