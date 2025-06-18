@@ -1,30 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+import { prisma } from "@/app/lib/prisma";
+import { NextResponse } from "next/server";
+export async function GET() {
 
-    const products = [
-  {
-    id: 1,
-    name: 'Basic T-shirt',
-    price: '$19.99',
-    image: 'https://placehold.co/300x300',
-  },
-  {
-    id: 2,
-    name: 'Cool Sneakers',
-    price: '$49.99',
-    image: 'https://placehold.co/300x300',
-  },
-  {
-    id: 3,
-    name: 'Stylish Backpack',
-    price: '$39.99',
-    image: 'https://placehold.co/300x300',
-  },
-]
-
-
+  try {
+    const data = await prisma.products.findMany();
     return NextResponse.json({
-        data: products
+      data: data
     })
+  } catch (error) {
+    return NextResponse.json({
+      message: "Error"
+    })
+  }
 }

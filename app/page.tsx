@@ -2,25 +2,17 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Products } from './generated/prisma'
 
-interface DataType {
- id : number ;
- name : string ;
- price : number ;
- image : string ;
-
-}
 export default function Home(){
-const [products, setProduct] = useState<DataType[]>([])
+const [products, setProduct] = useState<Products[]>([])
 
  useEffect(() => {
 (async() => {
     const products = await axios.get('/api/products')
     if(products.data.data){
-
       setProduct(products.data.data)
     }
-
 })()
 
  }, [])
